@@ -66,6 +66,12 @@ public class EmployeeImp implements EmployeeInt{
     @Override
     public void deleteEmployee(int id) {
         Connection conn = DBConnection.createDBConnection();
-
+        String qurey = "delete from employees where id =" + id;
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(qurey);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
