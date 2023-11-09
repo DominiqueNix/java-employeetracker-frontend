@@ -8,7 +8,7 @@ public interface EmployeeInt {
     //add employee
     public void addEmployee(Employee emp);
     //update employee
-    public void updateEmployee(int id);
+    public void updateEmployee(Employee emp);
     //delete employee
     public void deleteEmployee(int id);
 }

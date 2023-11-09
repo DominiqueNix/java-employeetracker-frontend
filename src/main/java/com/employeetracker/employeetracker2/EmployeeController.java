@@ -27,6 +27,20 @@ public class EmployeeController {
         empDao.addEmployee(employee);
         return "redirect:/";
     }
+
+    @GetMapping("/showFormForUpdate/{id}")
+    public String updateForm(@PathVariable(value = "id") int id, Model model){
+        Employee emp = empDao.oneEmployee(id);
+        model.addAttribute("emp", emp);
+        return "update";
+    }
+
+    @PostMapping("/update")
+    public String updateEmployee(@ModelAttribute("emp") Employee emp){
+        empDao.updateEmployee(emp);
+        return"redirect:/";
+    }
+
     @GetMapping("/deleteEmployee/{id}")
     public String deleteEmployee(@PathVariable(value = "id") int id){
         empDao.deleteEmployee(id);
