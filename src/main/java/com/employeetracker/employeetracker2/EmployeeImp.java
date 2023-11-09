@@ -34,7 +34,24 @@ public class EmployeeImp implements EmployeeInt{
 
     @Override
     public Employee oneEmployee(int id) {
-        return null;
+        Connection conn = DBConnection.createDBConnection();
+        String qurey = "select * from employees where id="+id;
+        Employee emp = new Employee();
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(qurey);
+            while(rs.next()){
+                emp.setEmployeeId(rs.getInt("id"));
+                emp.setName(rs.getString("name"));
+                emp.setAge(rs.getInt("age"));
+                emp.setJobTitle(rs.getString("jobTitle"));
+                emp.setSalary(rs.getInt("salary"));
+                emp.setManagerID(rs.getInt("managerID"));
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return emp;
     }
 
     @Override
@@ -59,8 +76,27 @@ public class EmployeeImp implements EmployeeInt{
     }
 
     @Override
-    public void updateEmployee(int id) {
+    public void updateEmployee(Employee emp) {
+        Connection conn = DBConnection.createDBConnection();
+        String query = "update employees set id= ?, name= ?, age= ?, jobTitle= ?, salary= ?, managerID= ? where id="+emp.getEmployeeId();
 
+        try{
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, emp.getEmployeeId());
+            pstmt.setString(2, emp.getName());
+            pstmt.setInt(3, emp.getAge());
+            pstmt.setString(4, emp.getJobTitle());
+            pstmt.setInt(5, emp.getSalary());
+            pstmt.setInt(6, emp.getManagerID());
+            System.out.println(pstmt);
+            int cnt = pstmt.executeUpdate();
+            if(cnt != 0){
+                System.out.println("Employee Updated");
+            }
+
+        }catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
